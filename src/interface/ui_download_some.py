@@ -39,8 +39,13 @@ class Ui_DownloadSome(object):
 
         self.inputButton = QPushButton(DownloadSome)
         self.inputButton.setObjectName(u"inputButton")
-
+        
         self.horizontalLayout.addWidget(self.inputButton)
+
+        self.outputButton = QPushButton(DownloadSome)
+        self.outputButton.setObjectName(u"outputBatchJMIndexButton")
+
+        self.horizontalLayout.addWidget(self.outputButton)
 
         self.loadInfoButton = QPushButton(DownloadSome)
         self.loadInfoButton.setObjectName(u"loadInfoButton")
@@ -90,6 +95,7 @@ class Ui_DownloadSome(object):
         DownloadSome.setWindowTitle(QCoreApplication.translate("DownloadSome", u"Form", None))
         self.totalLabel.setText("")
         self.inputButton.setText(QCoreApplication.translate("DownloadSome", u"\u6279\u91cf\u8f93\u5165JM\u53f7", None))
+        self.outputButton.setText(QCoreApplication.translate("DownloadSome", "批量导出JM号", None))
         self.loadInfoButton.setText(QCoreApplication.translate("DownloadSome", u"\u83b7\u53d6\u4fe1\u606f", None))
         self.cleanButton.setText(QCoreApplication.translate("DownloadSome", u"\u6e05\u7a7a", None))
         self.nasButton.setText(QCoreApplication.translate("DownloadSome", u"\u4e0a\u4f20", None))

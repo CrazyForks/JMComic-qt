@@ -44,6 +44,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="outputBatchJMIndexButton">
+       <property name="text">
+        <string>批量导出JM号</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="loadInfoButton">
        <property name="text">
         <string>获取信息</string>
