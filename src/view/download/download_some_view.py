@@ -17,6 +17,7 @@ from server import req, Status
 import re
 from tools.book import BookMgr
 from view.download.download_some_edit_view import DownloadSomeEditView
+from view.download.download_some_output_view import DownloadSomeOutputView
 from PySide6.QtWidgets import QHeaderView, QAbstractItemView, QMenu, QTableWidgetItem
 from PySide6.QtCore import Qt, QTimer, QUrl
 
@@ -38,6 +39,7 @@ class DownloadSomeView(QWidget, Ui_DownloadSome, QtTaskBase):
 
         self.setupUi(self)
         self.inputButton.clicked.connect(self.OpenEdit)
+        self.outputButton.clicked.connect(self.OutputJMIndices)
         self.loadInfoButton.clicked.connect(self.Start)
         self.cleanButton.clicked.connect(self.Clean)
         self.downButton.clicked.connect(self.Download)
@@ -74,6 +76,7 @@ class DownloadSomeView(QWidget, Ui_DownloadSome, QtTaskBase):
 
     def SetEnable(self, enable):
         self.inputButton.setEnabled(enable)
+        self.outputButton.setEnabled(enable)
         self.loadInfoButton.setEnabled(enable)
         self.downButton.setEnabled(enable)
         self.nasButton.setEnabled(enable)
@@ -83,6 +86,32 @@ class DownloadSomeView(QWidget, Ui_DownloadSome, QtTaskBase):
         view = DownloadSomeEditView(QtOwner().owner)
         view.SaveLogin.connect(self.AddBookInfo)
         view.show()
+
+    def OutputJMIndices(self):
+        self.outputView = DownloadSomeOutputView(QtOwner().owner)
+        self.outputView.SwitchSignal.connect(self.ShowOutputJMInfo)
+        self.ShowOutputJMInfo(self.outputView.mode)
+        self.outputView.show()
+
+    def ShowOutputJMInfo(self, *args, **kwargs):
+        mode = self.outputView.mode
+        jm_infos = []
+        count = self.tableWidget.rowCount()
+        for i in range(count):
+            bookId = self.tableWidget.item(i, 0).text()
+            info = self.allBookInfo.get(bookId)
+            if mode == 0:
+                msg = f"{bookId}"
+            elif mode == 1:
+                msg = f"jm{bookId}"
+            elif mode == 2:
+                msg = f"{bookId}\t\t{info.title}"
+            elif mode == 3:
+                msg = f"jm{bookId}\t\t{info.title}"
+            else:
+                raise ValueError(f"ShowOutputJMInfo get wrong mode: {mode}")
+            jm_infos.append(msg)
+        self.outputView.textEdit.setText("\n".join(jm_infos))
     
     def UpdateTable(self, bookId):
         if bookId not in self.allBookInfo:
