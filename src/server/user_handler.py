@@ -54,9 +54,12 @@ class CheckUpdateInfoHandler(object):
             if not task.res.GetText() or task.status == Status.NetError:
                 return
             if task.res.raw.status_code != 200:
+                data["st"] = Str.NotFound
                 return
 
-            data["data"] = task.res.GetText()
+            raw = task.res.GetText()
+            data["data"] = raw
+            data["st"] = Str.NotFound
         except Exception as es:
             pass
         finally:
@@ -72,9 +75,11 @@ class CheckUpdateConfigHandler(object):
             if not task.res.GetText() or task.status == Status.NetError:
                 return
             if task.res.raw.status_code != 200:
+                data["st"] = Str.NotFound
                 return
-
-            data["data"] = task.res.GetText()
+            raw = task.res.GetText()
+            data["data"] = raw
+            data["st"] = Str.NotFound
         except Exception as es:
             pass
         finally:

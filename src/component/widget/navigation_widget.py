@@ -1,7 +1,7 @@
 import time
 from datetime import datetime
 
-from PySide6.QtCore import QPropertyAnimation, QRect, QEasingCurve, QFile, QEvent, QSize
+from PySide6.QtCore import QPropertyAnimation, QRect, QEasingCurve, QFile, QEvent, QSize, QTimer
 from PySide6.QtGui import QPixmap, Qt, QIcon, QGuiApplication
 from PySide6.QtWidgets import QWidget, QScroller, QScrollerProperties, QCalendarWidget
 
@@ -12,6 +12,7 @@ from interface.ui_sign_widget import Ui_SignWidget
 from qt_owner import QtOwner
 from server import req
 from task.qt_task import QtTaskBase
+from tools.log import Log
 from tools.status import Status
 from tools.str import Str
 from tools.user import User
@@ -25,6 +26,13 @@ class NavigationWidget(QWidget, Ui_Navigation, QtTaskBase):
         QtTaskBase.__init__(self)
         self.setupUi(self)
         self.resize(260, 800)
+        self.timer = QTimer(self)
+        # 取余数
+        second = 3600 - int(time.time()) % 3600
+        self.timer.setInterval(1000*(second+10))
+        self.timer.timeout.connect(self.HourTimeOut)
+        self.timer.start()
+
         # if Setting.IsUseTitleBar.value:
         #     screens = QGuiApplication.screens()
         #     # print(screens[0].geometry(), screens[1].geometry())
@@ -126,6 +134,14 @@ class NavigationWidget(QWidget, Ui_Navigation, QtTaskBase):
         self.AddHttpTask(req.GetDailyReq2(user.uid), self.GetSignDailyBack)
     #     self.AddHttpTask(req.GetUserInfoReq(), self.UpdateUserBack)
 
+    def HourTimeOut(self):
+        Log.Info("check_next_sign")
+        self.timer.setInterval(1000*3600)
+        if not QtOwner().user.isLogin:
+            return
+        user = QtOwner().user
+        self.AddHttpTask(req.GetDailyReq2(user.uid), self.GetSignDailyBack)
+
     def GetSignDailyBack(self, raw):
         st = raw["st"]
         curDate = datetime.today().day
@@ -167,6 +183,8 @@ class NavigationWidget(QWidget, Ui_Navigation, QtTaskBase):
             self.proxyName.setText("CDN_{}".format(str(Setting.PreferCDNIP.value)))
         elif Setting.ProxySelectIndex.value == 6:
             self.proxyName.setText("US反代分流")
+        elif Setting.ProxySelectIndex.value == 7:
+            self.proxyName.setText("自定义域名")
         else:
             self.proxyName.setText("分流{}".format(str(Setting.ProxySelectIndex.value)))
 
@@ -174,6 +192,8 @@ class NavigationWidget(QWidget, Ui_Navigation, QtTaskBase):
             self.proxyImgName.setText("CDN_{}".format(str(Setting.PreferCDNIPImg.value)))
         elif Setting.ProxyImgSelectIndex.value == 6:
             self.proxyImgName.setText("US反代分流")
+        elif Setting.ProxyImgSelectIndex.value == 7:
+            self.proxyImgName.setText("自定义域名")
         else:
             self.proxyImgName.setText("分流{}".format(str(Setting.ProxyImgSelectIndex.value)))
 
@@ -260,3 +280,6 @@ class NavigationWidget(QWidget, Ui_Navigation, QtTaskBase):
         icon2.addFile(u":/png/icon/new.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.helpButton.setIcon(icon2)
         return
+
+    def Stop(self):
+        self.timer.stop()

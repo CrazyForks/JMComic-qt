@@ -21,13 +21,14 @@ from PySide6.QtWidgets import (QApplication, QButtonGroup, QCheckBox, QCommandLi
     QSpacerItem, QVBoxLayout, QWidget)
 
 from component.box.wheel_combo_box import WheelComboBox
+from component.line_edit.tip_line_edit import TipLineEdit
 from component.scroll_area.smooth_scroll_area import SmoothScrollArea
 
 class Ui_LoginProxyWidget(object):
     def setupUi(self, LoginProxyWidget):
         if not LoginProxyWidget.objectName():
             LoginProxyWidget.setObjectName(u"LoginProxyWidget")
-        LoginProxyWidget.resize(541, 483)
+        LoginProxyWidget.resize(450, 684)
         LoginProxyWidget.setMinimumSize(QSize(450, 0))
         self.gridLayout = QGridLayout(LoginProxyWidget)
         self.gridLayout.setSpacing(12)
@@ -37,7 +38,7 @@ class Ui_LoginProxyWidget(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 504, 598))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 430, 664))
         self.verticalLayout = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout_11 = QHBoxLayout()
@@ -425,9 +426,16 @@ class Ui_LoginProxyWidget(object):
         self.cdn_api_ip = QLineEdit(self.scrollAreaWidgetContents)
         self.cdn_api_ip.setObjectName(u"cdn_api_ip")
         self.cdn_api_ip.setMinimumSize(QSize(120, 0))
-        self.cdn_api_ip.setMaximumSize(QSize(120, 16777215))
+        self.cdn_api_ip.setMaximumSize(QSize(16777215, 16777215))
 
         self.horizontalLayout_2.addWidget(self.cdn_api_ip)
+
+        self.line_6 = QFrame(self.scrollAreaWidgetContents)
+        self.line_6.setObjectName(u"line_6")
+        self.line_6.setFrameShape(QFrame.VLine)
+        self.line_6.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_2.addWidget(self.line_6)
 
         self.label_8 = QLabel(self.scrollAreaWidgetContents)
         self.label_8.setObjectName(u"label_8")
@@ -437,7 +445,7 @@ class Ui_LoginProxyWidget(object):
         self.cdn_img_ip = QLineEdit(self.scrollAreaWidgetContents)
         self.cdn_img_ip.setObjectName(u"cdn_img_ip")
         self.cdn_img_ip.setMinimumSize(QSize(120, 0))
-        self.cdn_img_ip.setMaximumSize(QSize(120, 16777215))
+        self.cdn_img_ip.setMaximumSize(QSize(16777215, 16777215))
 
         self.horizontalLayout_2.addWidget(self.cdn_img_ip)
 
@@ -458,6 +466,74 @@ class Ui_LoginProxyWidget(object):
 
 
         self.verticalLayout.addLayout(self.horizontalLayout_8)
+
+        self.line_7 = QFrame(self.scrollAreaWidgetContents)
+        self.line_7.setObjectName(u"line_7")
+        self.line_7.setFrameShape(QFrame.HLine)
+        self.line_7.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout.addWidget(self.line_7)
+
+        self.horizontalLayout_13 = QHBoxLayout()
+        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
+        self.label_15 = QLabel(self.scrollAreaWidgetContents)
+        self.label_15.setObjectName(u"label_15")
+
+        self.horizontalLayout_13.addWidget(self.label_15)
+
+        self.host_api_domain = TipLineEdit(self.scrollAreaWidgetContents)
+        self.host_api_domain.setObjectName(u"host_api_domain")
+        self.host_api_domain.setMinimumSize(QSize(120, 0))
+
+        self.horizontalLayout_13.addWidget(self.host_api_domain)
+
+        self.line_5 = QFrame(self.scrollAreaWidgetContents)
+        self.line_5.setObjectName(u"line_5")
+        self.line_5.setFrameShape(QFrame.VLine)
+        self.line_5.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_13.addWidget(self.line_5)
+
+        self.label_16 = QLabel(self.scrollAreaWidgetContents)
+        self.label_16.setObjectName(u"label_16")
+
+        self.horizontalLayout_13.addWidget(self.label_16)
+
+        self.host_img_domain = TipLineEdit(self.scrollAreaWidgetContents)
+        self.host_img_domain.setObjectName(u"host_img_domain")
+        self.host_img_domain.setMinimumSize(QSize(120, 0))
+
+        self.horizontalLayout_13.addWidget(self.host_img_domain)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_13)
+
+        self.horizontalLayout_7 = QHBoxLayout()
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.radioButton_7 = QRadioButton(self.scrollAreaWidgetContents)
+        self.radioApiGroup.addButton(self.radioButton_7)
+        self.radioButton_7.setObjectName(u"radioButton_7")
+
+        self.horizontalLayout_7.addWidget(self.radioButton_7)
+
+        self.label_api_7 = QLabel(self.scrollAreaWidgetContents)
+        self.label_api_7.setObjectName(u"label_api_7")
+
+        self.horizontalLayout_7.addWidget(self.label_api_7)
+
+        self.radio_img_7 = QRadioButton(self.scrollAreaWidgetContents)
+        self.radioImgGroup.addButton(self.radio_img_7)
+        self.radio_img_7.setObjectName(u"radio_img_7")
+
+        self.horizontalLayout_7.addWidget(self.radio_img_7)
+
+        self.label_img_7 = QLabel(self.scrollAreaWidgetContents)
+        self.label_img_7.setObjectName(u"label_img_7")
+
+        self.horizontalLayout_7.addWidget(self.label_img_7)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_7)
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
@@ -509,7 +585,7 @@ class Ui_LoginProxyWidget(object):
         self.radio_img_3.setText(QCoreApplication.translate("LoginProxyWidget", u"\u5206\u6d413", None))
         self.label_api_4.setText("")
 #if QT_CONFIG(tooltip)
-        self.radioButton_4.setToolTip(QCoreApplication.translate("LoginProxyWidget", u"\u6240\u4ee5\u5206\u6d41\u4e0d\u53ef\u4f7f\u7528\u65f6\uff0c\u81ea\u52a8\u89e3\u9501", None))
+        self.radioButton_4.setToolTip("")
 #endif // QT_CONFIG(tooltip)
         self.radioButton_4.setText(QCoreApplication.translate("LoginProxyWidget", u"\u5206\u6d414", None))
         self.label_api_1.setText("")
@@ -521,7 +597,7 @@ class Ui_LoginProxyWidget(object):
         self.label_img_2.setText("")
         self.label_6.setText(QCoreApplication.translate("LoginProxyWidget", u"\u5ef6\u8fdf", None))
 #if QT_CONFIG(tooltip)
-        self.radio_img_4.setToolTip(QCoreApplication.translate("LoginProxyWidget", u"\u6240\u4ee5\u5206\u6d41\u4e0d\u53ef\u4f7f\u7528\u65f6\uff0c\u81ea\u52a8\u89e3\u9501", None))
+        self.radio_img_4.setToolTip("")
 #endif // QT_CONFIG(tooltip)
         self.radio_img_4.setText(QCoreApplication.translate("LoginProxyWidget", u"\u5206\u6d414", None))
         self.radioButton_3.setText(QCoreApplication.translate("LoginProxyWidget", u"\u5206\u6d413", None))
@@ -543,5 +619,11 @@ class Ui_LoginProxyWidget(object):
         self.label_8.setText(QCoreApplication.translate("LoginProxyWidget", u"CDN\u5730\u5740:", None))
         self.label_3.setText(QCoreApplication.translate("LoginProxyWidget", u"CDN\u8bbe\u7f6e\u8bf7\u770b\u8bf4\u660e\u83b7\u53d6", None))
         self.commandLinkButton.setText(QCoreApplication.translate("LoginProxyWidget", u"\u8bf4\u660e", None))
+        self.label_15.setText(QCoreApplication.translate("LoginProxyWidget", u"Api\u57df\u540d\uff1a", None))
+        self.label_16.setText(QCoreApplication.translate("LoginProxyWidget", u"\u56fe\u7247\u57df\u540d\uff1a", None))
+        self.radioButton_7.setText(QCoreApplication.translate("LoginProxyWidget", u"\u81ea\u5b9a\u4e49\u57df\u540d", None))
+        self.label_api_7.setText("")
+        self.radio_img_7.setText(QCoreApplication.translate("LoginProxyWidget", u"\u81ea\u5b9a\u4e49\u57df\u540d", None))
+        self.label_img_7.setText("")
     # retranslateUi
 

@@ -172,15 +172,15 @@ class ServerReq(object):
 
 # 检查更新
 class CheckUpdateReq(ServerReq):
-    def __init__(self, isPre=False):
+    def __init__(self, url2, isPre=False):
         method = "GET"
         data = dict()
         data["version"] = config.RealVersion
         data["platform"] = platform.platform()
         if not isPre:
-            url = config.AppUrl + "/version.txt?"
+            url = url2 + "/version.txt?"
         else:
-            url = config.AppUrl + "/version_pre.txt?"
+            url = url2 + "/version_pre.txt?"
         url += ToolUtil.DictToUrl(data)
         super(self.__class__, self).__init__(url, {}, method)
         self.isParseRes = False
@@ -190,12 +190,12 @@ class CheckUpdateReq(ServerReq):
 
 # 检查更新
 class CheckUpdateInfoReq(ServerReq):
-    def __init__(self, newVersion):
+    def __init__(self, url2, newVersion):
         method = "GET"
         data = dict()
         data["version"] = config.RealVersion
         data["platform"] = platform.platform()
-        url = config.AppUrl + "/{}.txt?".format(newVersion)
+        url = url2 + "/{}.txt?".format(newVersion)
         url += ToolUtil.DictToUrl(data)
         super(self.__class__, self).__init__(url, {}, method)
         self.isParseRes = False
@@ -204,12 +204,12 @@ class CheckUpdateInfoReq(ServerReq):
 
 # 检查更新配置
 class CheckUpdateConfigReq(ServerReq):
-    def __init__(self):
+    def __init__(self, url2):
         method = "GET"
         data = dict()
         data["version"] = config.RealVersion
         data["platform"] = platform.platform()
-        url = config.AppUrl + "/config.txt?"
+        url = url2 + "/config.txt?"
         url += ToolUtil.DictToUrl(data)
         super(self.__class__, self).__init__(url, {}, method)
         self.isParseRes = False

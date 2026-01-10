@@ -21,35 +21,57 @@ class GlobalItem(object):
 
 
 class GlobalConfig:
-    Ver = GlobalItem(22)
-    VerTime = GlobalItem("2024-10-15")
+    Ver = GlobalItem(65)
+    VerTime = GlobalItem("2026-1-7")
 
     # web url
     WebDnsList = GlobalItem([])
     Url = GlobalItem("https://18-comicblade.art")
-    UrlList = GlobalItem(["https://18comic-hok.vip","https://18comic.vip","https://jmcomic.me","https://18comic-16promax.club","https://18comic.tw","https://18comic-doa.xyz"])
+    UrlList = GlobalItem(["https://18comic-hok.vip",
+                          "https://18comic.vip",
+                          "https://jmcomic.me",
+                          "https://18comic-16promax.club",
+                          "https://18comic.tw",
+                          "https://18comic-doa.xyz"])
 
     # mobile url
 
     # Url2 = GlobalItem("https://www.jmapinode.biz")
     # PicUrl2 = GlobalItem("https://cdn-msp.jmapinodeudzn.net")
-    Url2List = GlobalItem(["https://www.jmapiproxyxxx.vip",
-                           "https://www.cdnblackmyth.vip",
-                           "https://www.cdnblackmyth.xyz",
-                           "https://www.jmapiproxyxxx.me"])
+    Url2List = GlobalItem(["https://www.cdnhth.club",
+                           "https://www.cdngwc.cc",
+                           "https://www.cdnhth.net",
+                           "https://www.cdnbea.net"])
 
     ProxyApiDomain2 = GlobalItem("jm2-api.jpacg.cc")
     ProxyImgDomain2 = GlobalItem("jm2-img.jpacg.cc")
 
     PicUrlList = GlobalItem(
-        ["https://cdn-msp.jmapinodeudzn.net", "https://cdn-msp2.jmapinodeudzn.net", "https://cdn-msp.jmapiproxy3.cc",
-         "https://cdn-msp.jmapiproxy4.cc"])
+        [
+            "https://cdn-msp.jmapiproxy1.cc",
+            "https://cdn-msp.jmapiproxy3.cc",
+            "https://cdn-msp.jmapinodeudzn.net",
+            "https://cdn-msp.jmdanjonproxy.xyz",
+        ])
 
-    CdnApiUrl = GlobalItem("https://www.cdnxxx-proxy.vip")
+    ImgAutoUrl = GlobalItem([
+        "cdn-msp2.jmapiproxy1.cc",
+        "cdn-msp2.jmapiproxy3.cc",
+        "cdn-msp2.jmapinodeudzn.net",
+        "cdn-msp3.jmapinodeudzn.net",
+        "cdn-msp3.jmapiproxy1.cc",
+        "cdn-msp3.jmapiproxy3.cc",
+    ])
+
+    ApiAutoUrl = GlobalItem([
+        "www.cdn-mspjmapiproxy.xyz",
+    ])
+
+    CdnApiUrl = GlobalItem("https://www.cdnhth.club")
     CdnImgUrl = GlobalItem("https://cdn-msp.jmapiproxy3.cc")
-    ProxyApiUrl = GlobalItem("https://www.cdnxxx-proxy.vip")
+    ProxyApiUrl = GlobalItem("https://www.cdnhth.club")
     ProxyImgUrl = GlobalItem("https://cdn-msp.jmapiproxy3.cc")
-    HeaderVer = GlobalItem("1.7.5")
+    HeaderVer = GlobalItem("2.0.14")
 
     def __init__(self):
         pass
@@ -64,6 +86,9 @@ class GlobalConfig:
             return GlobalConfig.CdnApiUrl.value
         elif index == 6:
             return GlobalConfig.ProxyApiUrl.value
+        elif index == 7:
+            from tools.tool import ToolUtil
+            return "https://" + ToolUtil.GetUrlHost(Setting.HostApiDomain.value)
         return GlobalConfig.Url2List.value[index-1]
 
     @staticmethod
@@ -76,6 +101,9 @@ class GlobalConfig:
             return GlobalConfig.CdnImgUrl.value
         elif index == 6:
             return GlobalConfig.ProxyImgUrl.value
+        elif index == 7:
+            from tools.tool import ToolUtil
+            return "https://" + ToolUtil.GetUrlHost(Setting.HostImgDomain.value)
         return GlobalConfig.PicUrlList.value[index-1]
 
 

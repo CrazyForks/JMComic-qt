@@ -12,6 +12,7 @@ from interface.ui_help import Ui_Help
 from qt_owner import QtOwner
 from server import req
 from task.qt_task import QtTaskBase
+from task.task_thread import ThreadPrintDns
 from tools.log import Log
 from tools.str import Str
 from view.help.help_log_widget import HelpLogWidget
@@ -52,7 +53,10 @@ class HelpView(QWidget, Ui_Help, QtTaskBase):
         self.preCheckBox.setChecked(bool(Setting.IsPreUpdate.value))
         self.preCheckBox.clicked.connect(self.SwitchCheckPre)
         self.configVer.setText("{}({})".format(GlobalConfig.Ver.value, GlobalConfig.VerTime.value))
-
+        self.dnsCheck = ThreadPrintDns()
+        self.configUrlList = [config.AppUrl, config.AppUrl2, config.AppUrl3]
+        self.configUrlIndex = 0
+        self.updateUrlIndex = 0
 
     def retranslateUi(self, Help):
         Ui_Help.retranslateUi(self, Help)
@@ -72,19 +76,36 @@ class HelpView(QWidget, Ui_Help, QtTaskBase):
         Setting.IsPreUpdate.SetValue(int(self.preCheckBox.isChecked()))
 
     def InitUpdateConfig(self):
-        self.AddHttpTask(req.CheckUpdateConfigReq(), self.InitUpdateConfigBack)
+        self.configUrlIndex = 0
+        self.AddHttpTask(req.CheckUpdateConfigReq(self.configUrlList[self.configUrlIndex]), self.InitUpdateConfigBack)
 
     def InitUpdateConfigBack(self, raw):
         try:
             st = raw.get("st")
             if st != Str.Ok:
+                self.configUrlIndex += 1
+                if self.configUrlIndex >= len(self.configUrlList):
+                    self.StartCheckDns()
+                    return
+                self.AddHttpTask(req.CheckUpdateConfigReq(self.configUrlList[self.configUrlIndex]), self.InitUpdateConfigBack)
                 return
+            self.StartCheckDns()
             data = raw.get("data")
             if not data:
                 return
             GlobalConfig.UpdateSetting(data)
+            self.configVer.setText("{}({})".format(GlobalConfig.Ver.value, GlobalConfig.VerTime.value))
         except Exception as es:
             Log.Error(es)
+
+    def StartCheckDns(self):
+        self.dnsCheck.hostList.append(config.AppUrl)
+        self.dnsCheck.hostList.append(config.AppUrl2)
+        self.dnsCheck.hostList.append(config.AppUrl3)
+        self.dnsCheck.hostList.append(GlobalConfig.ProxyApiDomain2.value)
+        self.dnsCheck.hostList.extend(GlobalConfig.Url2List.value)
+        self.dnsCheck.hostList.extend(GlobalConfig.PicUrlList.value)
+        self.dnsCheck.start()
 
     def InitUpdate(self):
         self.checkUpdateIndex = 0
@@ -96,13 +117,19 @@ class HelpView(QWidget, Ui_Help, QtTaskBase):
         # if self.checkUpdateIndex > len(self.updateUrl) -1:
         #     self.UpdateText(self.verCheck, Str.AlreadyUpdate, "#ff4081", True)
         #     return
-        self.AddHttpTask(req.CheckUpdateReq(Setting.IsPreUpdate.value), self.InitUpdateBack)
+        self.updateUrlIndex = 0
+        self.AddHttpTask(req.CheckUpdateReq(self.configUrlList[self.updateUrlIndex], Setting.IsPreUpdate.value), self.InitUpdateBack)
 
     def InitUpdateBack(self, raw):
         try:
             st = raw.get("st")
             if st != Str.Ok:
                 self.UpdateText(self.verCheck, st, "#d71345", True)
+                self.updateUrlIndex += 1
+                if self.updateUrlIndex >= len(self.configUrlList):
+                    return
+                self.AddHttpTask(req.CheckUpdateReq(self.configUrlList[self.updateUrlIndex], Setting.IsPreUpdate.value),
+                                 self.InitUpdateBack)
                 return
             data = raw.get("data")
             if not data:
@@ -112,7 +139,7 @@ class HelpView(QWidget, Ui_Help, QtTaskBase):
                 self.UpdateText(self.verCheck, Str.AlreadyUpdate, "#ff4081", True)
                 return
 
-            self.AddHttpTask(req.CheckUpdateInfoReq(data), self.InitUpdateInfoBack)
+            self.AddHttpTask(req.CheckUpdateInfoReq(self.configUrlList[self.updateUrlIndex], data), self.InitUpdateInfoBack)
             self.UpdateText(self.verCheck, Str.HaveUpdate, "#d71345", True)
         except Exception as es:
             Log.Error(es)

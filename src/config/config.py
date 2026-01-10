@@ -17,14 +17,16 @@ PreLook = 4                    # 预显示
 IsLoadingPicture = True
 
 AppUrl = "https://app.jpacg.cc/JMComic"
+AppUrl2 = "https://app2.jpacg.cc/JMComic"
+AppUrl3 = "https://app3.jpacg.cc/JMComic"
 
 UpdateUrlBack = "https://github.com/tonquer/JMComic-qt/"
 UpdateUrl2Back = "https://hub.jpacg.cc/tonquer/JMComic-qt/"
 UpdateUrl3Back = "https://hub.fastgit.xyz/tonquer/JMComic-qt"
 
-UpdateVersion = "v1.3.0"
-RealVersion = "v1.3.0"
-VersionTime = "2025-11-30"
+UpdateVersion = "v1.3.1"
+RealVersion = "v1.3.1"
+VersionTime = "2026-1-10"
 
 Waifu2xVersion = "2.0.1"
 LoginUserName = ""

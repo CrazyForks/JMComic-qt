@@ -115,6 +115,9 @@ class Setting:
     ProxyImgSelectIndex = SettingValue("ProxySetting", 1, False)
     PreferCDNIPImg = SettingValue("ProxySetting", "104.18.227.172", False)
 
+    HostApiDomain = SettingValue("ProxySetting", "www.cdn-mspjmapiproxy.xyz", False)
+    HostImgDomain = SettingValue("ProxySetting", "cdn-msp.jmapinodeudzn.net", False)
+
     IsLoginProxy = SettingValue("ProxySetting", 0, False)
     RegisterProsyIndex = SettingValue("ProxySetting", 1, False)
     ApiTimeOut = SettingValue("ProxySetting", 1, False, [2, 5, 7, 10])

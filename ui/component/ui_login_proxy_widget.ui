@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>541</width>
-    <height>483</height>
+    <width>450</width>
+    <height>684</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -33,8 +33,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>504</width>
-        <height>598</height>
+        <width>430</width>
+        <height>664</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -399,7 +399,7 @@
          <item row="5" column="0">
           <widget class="QRadioButton" name="radioButton_4">
            <property name="toolTip">
-            <string>所以分流不可使用时，自动解锁</string>
+            <string/>
            </property>
            <property name="text">
             <string>分流4</string>
@@ -489,7 +489,7 @@
          <item row="5" column="2">
           <widget class="QRadioButton" name="radio_img_4">
            <property name="toolTip">
-            <string>所以分流不可使用时，自动解锁</string>
+            <string/>
            </property>
            <property name="text">
             <string>分流4</string>
@@ -652,9 +652,16 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>120</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_6">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
            </property>
           </widget>
          </item>
@@ -675,7 +682,7 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>120</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -701,6 +708,96 @@
          </item>
         </layout>
        </item>
+       <item>
+        <widget class="Line" name="line_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_13">
+         <item>
+          <widget class="QLabel" name="label_15">
+           <property name="text">
+            <string>Api域名：</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="TipLineEdit" name="host_api_domain">
+           <property name="minimumSize">
+            <size>
+             <width>120</width>
+             <height>0</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_5">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_16">
+           <property name="text">
+            <string>图片域名：</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="TipLineEdit" name="host_img_domain">
+           <property name="minimumSize">
+            <size>
+             <width>120</width>
+             <height>0</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QRadioButton" name="radioButton_7">
+           <property name="text">
+            <string>自定义域名</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">radioApiGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_api_7">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radio_img_7">
+           <property name="text">
+            <string>自定义域名</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">radioImgGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_img_7">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -718,6 +815,11 @@
    <class>WheelComboBox</class>
    <extends>QComboBox</extends>
    <header location="global">component.box.wheel_combo_box.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TipLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">component.line_edit.tip_line_edit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
@@ -747,8 +849,8 @@
   <slot>OpenUrl()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="radioApiGroup"/>
   <buttongroup name="radioProxyGroup"/>
+  <buttongroup name="radioApiGroup"/>
   <buttongroup name="radioImgGroup"/>
  </buttongroups>
 </ui>

@@ -475,6 +475,7 @@ class MainView(Main, QtTaskBase):
         self.searchView.Stop()
         self.readView.Stop()
         self.batchSrView.Stop()
+        self.navigationWidget.Stop()
         TaskWaifu2x().Stop()
         TaskQImage().Stop()
         TaskMulti().Stop()

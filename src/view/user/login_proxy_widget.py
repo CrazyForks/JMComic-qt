@@ -38,6 +38,7 @@ class LoginProxyWidget(QtWidgets.QWidget, Ui_LoginProxyWidget, QtTaskBase):
         self.radioApiGroup.setId(self.radioButton_4, 4)
         self.radioApiGroup.setId(self.radioButton_5, 5)
         self.radioApiGroup.setId(self.radioButton_6, 6)
+        self.radioApiGroup.setId(self.radioButton_7, 7)
 
         self.radioImgGroup.setId(self.radio_img_1, 1)
         self.radioImgGroup.setId(self.radio_img_2, 2)
@@ -45,6 +46,7 @@ class LoginProxyWidget(QtWidgets.QWidget, Ui_LoginProxyWidget, QtTaskBase):
         self.radioImgGroup.setId(self.radio_img_4, 4)
         self.radioImgGroup.setId(self.radio_img_5, 5)
         self.radioImgGroup.setId(self.radio_img_6, 6)
+        self.radioImgGroup.setId(self.radio_img_7, 7)
         # self.buttonGroup.setId(self.radioButton_5, 5)
 
         self.radioProxyGroup.setId(self.proxy_0, 0)
@@ -54,11 +56,13 @@ class LoginProxyWidget(QtWidgets.QWidget, Ui_LoginProxyWidget, QtTaskBase):
         self.LoadSetting()
         self.UpdateServer()
         self.commandLinkButton.clicked.connect(self.OpenUrl)
-        self.maxNum = 7
+        self.maxNum = 8
         self.loginProxy.hide()
         self.uaRandom.clicked.connect(self.RandomUa)
         self.lastResult = {}
         self.LoadHistory()
+        self.host_img_domain.SetWordData(GlobalConfig.ImgAutoUrl.value[:])
+        self.host_api_domain.SetWordData(GlobalConfig.ApiAutoUrl.value[:])
 
     def Init(self):
         self.LoadSetting()
@@ -97,18 +101,22 @@ class LoginProxyWidget(QtWidgets.QWidget, Ui_LoginProxyWidget, QtTaskBase):
         self.sockEdit.setEnabled(enabled)
         self.cdn_img_ip.setEnabled(enabled)
         self.cdn_api_ip.setEnabled(enabled)
+        self.host_api_domain.setEnabled(enabled)
+        self.host_img_domain.setEnabled(enabled)
         self.radioButton_1.setEnabled(enabled)
         self.radioButton_2.setEnabled(enabled)
         self.radioButton_3.setEnabled(enabled)
         self.radioButton_4.setEnabled(enabled)
         self.radioButton_5.setEnabled(enabled)
         self.radioButton_6.setEnabled(enabled)
+        self.radioButton_7.setEnabled(enabled)
         self.radio_img_1.setEnabled(enabled)
         self.radio_img_2.setEnabled(enabled)
         self.radio_img_3.setEnabled(enabled)
         self.radio_img_4.setEnabled(enabled)
         self.radio_img_5.setEnabled(enabled)
         self.radio_img_6.setEnabled(enabled)
+        self.radio_img_7.setEnabled(enabled)
         # self.radioButton_5.setEnabled(enabled)
 
     def RandomUa(self):
@@ -135,6 +143,8 @@ class LoginProxyWidget(QtWidgets.QWidget, Ui_LoginProxyWidget, QtTaskBase):
         self.loginProxy.setChecked(bool(Setting.IsLoginProxy.value))
         self.apiTimeout.setCurrentIndex(Setting.ApiTimeOut.value)
         self.imgTimeout.setCurrentIndex(Setting.ImgTimeOut.value)
+        self.host_api_domain.setText(Setting.HostApiDomain.value)
+        self.host_img_domain.setText(Setting.HostImgDomain.value)
 
     def SaveSetting(self):
         Setting.IsHttpProxy.SetValue(int(self.radioProxyGroup.checkedId()))
@@ -145,6 +155,8 @@ class LoginProxyWidget(QtWidgets.QWidget, Ui_LoginProxyWidget, QtTaskBase):
         Setting.IsLoginProxy.SetValue(int(self.loginProxy.isChecked()))
         Setting.PreferCDNIPImg.SetValue(self.cdn_img_ip.text())
         Setting.PreferCDNIP.SetValue(self.cdn_api_ip.text())
+        Setting.HostApiDomain.SetValue(self.host_api_domain.text())
+        Setting.HostImgDomain.SetValue(self.host_img_domain.text())
         Setting.UerAgent.SetValue(self.uaEdit.text())
         Setting.ApiTimeOut.SetValue(self.apiTimeout.currentIndex())
         Setting.ImgTimeOut.SetValue(self.imgTimeout.currentIndex())
@@ -207,6 +219,12 @@ class LoginProxyWidget(QtWidgets.QWidget, Ui_LoginProxyWidget, QtTaskBase):
 
         self.speedTest.append((GlobalConfig.ProxyApiUrl.value, GlobalConfig.ProxyImgUrl.value, False, True, (GlobalConfig.ProxyApiDomain2.value, GlobalConfig.ProxyImgDomain2.value), i))
         i += 1
+
+        hostApiDomain = self.host_api_domain.text()
+        hostImgDomain = self.host_img_domain.text()
+        if hostApiDomain or hostImgDomain:
+            self.speedTest.append((hostApiDomain, hostImgDomain, False, False, ("", ""), i))
+            i += 1
 
         self.SetEnabled(False)
         self.needBackNum = 0
