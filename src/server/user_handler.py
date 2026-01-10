@@ -59,7 +59,8 @@ class CheckUpdateInfoHandler(object):
 
             raw = task.res.GetText()
             data["data"] = raw
-            data["st"] = Str.NotFound
+            if not raw:
+                data["st"] = Str.NotFound
         except Exception as es:
             pass
         finally:
@@ -79,7 +80,8 @@ class CheckUpdateConfigHandler(object):
                 return
             raw = task.res.GetText()
             data["data"] = raw
-            data["st"] = Str.NotFound
+            if not raw:
+                data["st"] = Str.NotFound
         except Exception as es:
             pass
         finally:
